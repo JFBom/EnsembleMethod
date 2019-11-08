@@ -1,6 +1,7 @@
 Class Module.MD5Hash Extends %RegisteredObject
 {
 
+/// This is first Method
 ClassMethod StringMd5Hash(Input As %String) As %String
 {
  
@@ -10,24 +11,21 @@ ClassMethod StringMd5Hash(Input As %String) As %String
   Quit outString
 }
 
-ClassMethod StreamMd5Hash(Input As %GlobalCharacterStream) As %String
+/// Second Method
+ClassMethod StringMd5Hash2(Input As %String) As %String
 {
  
-  Set InString = Input.Read()
-  Set InString = $ZCVT(InString,"O","UTF8") 
-  Set InString = $system.Encryption.MD5Hash(InString)
-  Set outString = ##class(%xsd.hexBinary).LogicalToXSD(InString)
-  Quit outString
-}
-
-ClassMethod StreamMd5Hash2(Input As %GlobalCharacterStream) As %String
-{
- 
-  Set InString = Input.Read()
-  Set InString = $ZCVT(InString,"O","UTF8") 
-  Set InString = $system.Encryption.MD5Hash(InString)
-  Set outString = ##class(%xsd.hexBinary).LogicalToXSD(InString)
-  Quit outString
+  Set InString = $ZCVT(Input,"O","UTF8")
+  Set str = $System.Encryption.MD5Hash(InString) 
+  #Dim hex as %String = ""
+  #Dim hex1 as %String
+  #Dim iStr as %Integer
+  For iStr=1:1:$Length(str) {
+    Set hex1 = $ZHex($Ascii(str,iStr))
+    If $Length(hex1)=1 set hex1="0"_hex1
+    Set hex = hex _ hex1
+  }
+  Quit $ZConvert(hex,"l")
 }
 
 }
