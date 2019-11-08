@@ -20,4 +20,14 @@ ClassMethod StreamMd5Hash(Input As %GlobalCharacterStream) As %String
   Quit outString
 }
 
+ClassMethod StreamMd5Hash2(Input As %GlobalCharacterStream) As %String
+{
+ 
+  Set InString = Input.Read()
+  Set InString = $ZCVT(InString,"O","UTF8") 
+  Set InString = $system.Encryption.MD5Hash(InString)
+  Set outString = ##class(%xsd.hexBinary).LogicalToXSD(InString)
+  Quit outString
+}
+
 }
