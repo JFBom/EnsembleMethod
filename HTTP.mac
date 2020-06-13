@@ -1,0 +1,26 @@
+Routine Test
+    
+    Set httprequestin = ##Class(%Net.HttpRequest).%New()
+    ;#BO : set tSC = ..Adapter.SendFormDataURL(tURL,.tHttpResponse,"POST",httprequestin,"",tHttpRequestStream)
+    /***UseInNoAdapter***/
+
+    ;# tHttpRequestStream : httprequestin.EntityBody
+    ;# tHttpResponse : httprequestin.HttpResponse
+
+     /***UseInNoAdapter***/
+   /*For Example*/
+   Set httprequestin= ##class(%Net.HttpRequest).%New()
+   Set tHttpResponse.ContentType="application/json"
+   Set httpReq.ContentCharset="utf-8"
+   Set tSC = ..Adapter.SendFormDataURL(tURL,.tHttpResponse,"POST",httprequestin,"",tHttpRequestStream)
+   $$$LOGINFO(httpRes.tHttpResponse.Read()) 
+    ;# || 
+    ;# ||
+   Set httprequestin=##class(%Net.HttpRequest).%New()
+   Set httprequestin.ContentType="application/json"
+   Set httprequestin.ContentCharset="utf-8"	
+   Do httprequestin.EntityBody.Write("{""appKey"":""2d09fc8837390fdde4278a0c82af07f7c22e2a57""}")
+   Set tSC = httprequestin.Post("http://ip/heren/api/openplatform/auth/token")
+   Set tHttpResponse = ##class(%Net.HttpResponse).%New()
+   Set tHttpResponse = httprequestin.HttpResponse
+   $$$LOGINFO(tHttpResponse.Read()) 

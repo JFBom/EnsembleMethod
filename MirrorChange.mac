@@ -1,0 +1,72 @@
+Routine ZMIRROR
+NotifyBecomePrimary() public
+{
+  #Dim hex as %String = ""
+  #Dim hex1 as %String
+  #Dim iStr as %Integer
+  #Dim params as %String
+  Set httpReq=##class(%Net.HttpRequest).%New()
+  Set params = "phone,Mirror主机发生改变，请注意！;"_
+  set time = $h
+  Set day = $p(time,",",1) - 47117
+  Set sec = $p(time,",",2) - 28800
+  Set Time = day*24*60*60+sec
+  Set Time= Time_"448"
+  Set appKey = "61ebb6feea404011b8abaecf0e63a37c"
+  Set tempId = "d2fd3552e3f7423cbe3c6c9ef967f58e"
+  Set isDefault = "0"
+  Set sign = "SdXoasmQRhe"
+  Set input = Time_sign_params
+  Set input = $zcvt(input,"O","UTF8")
+  Set str = $System.Encryption.MD5Hash(input)
+   For iStr=1:1:$Length(str) {
+   Set hex1 = $ZHex($Ascii(str,iStr))
+   If $Length(hex1)=1 set hex1="0"_hex1
+   Set hex = hex _ hex1
+   }
+  Set sign = $ZConvert(hex,"l")
+  d httpReq.InsertFormData("params",params)
+  d httpReq.InsertFormData("sign",sign)
+  d httpReq.InsertFormData("tempId",tempId)
+  d httpReq.InsertFormData("isDefault",isDefault)
+  d httpReq.InsertFormData("time",Time)
+  d httpReq.InsertFormData("appKey",appKey)
+  do httpReq.Post("http://ip:8011/dev/api/msg")
+  w httpReq.HttpResponse.Data.Read()
+ quit
+} 
+NotifyBecomePrimaryFailed() public
+{
+  #Dim hex as %String = ""
+  #Dim hex1 as %String
+  #Dim iStr as %Integer
+  Set httpReq=##class(%Net.HttpRequest).%New()
+  Set params = "phone,Mirror企图进行切换主备机，但切换失败，请立即介入！;"_
+  set time = $h
+  Set day = $p(time,",",1) - 47117
+  Set sec = $p(time,",",2) - 28800
+  Set Time = day*24*60*60+sec
+  Set Time= Time_"448"
+  Set appKey = "61ebb6feea404011b8abaecf0e63a37c"
+  Set tempId = "d2fd3552e3f7423cbe3c6c9ef967f58e"
+  Set isDefault = "0"
+  Set sign = "SdXoasmQRhe"
+  Set input = Time_sign_params
+  Set input = $zcvt(input,"O","UTF8")
+  Set str = $System.Encryption.MD5Hash(input)
+   For iStr=1:1:$Length(str) {
+   Set hex1 = $ZHex($Ascii(str,iStr))
+   If $Length(hex1)=1 set hex1="0"_hex1
+   Set hex = hex _ hex1
+   }
+  Set sign = $ZConvert(hex,"l")
+  d httpReq.InsertFormData("params",params)
+  d httpReq.InsertFormData("sign",sign)
+  d httpReq.InsertFormData("tempId",tempId)
+  d httpReq.InsertFormData("isDefault",isDefault)
+  d httpReq.InsertFormData("time",Time)
+  d httpReq.InsertFormData("appKey",appKey)
+  do httpReq.Post("http://ip:8011/dev/api/msg")
+  w httpReq.HttpResponse.Data.Read()
+ quit 
+}

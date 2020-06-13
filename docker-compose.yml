@@ -1,8 +1,0 @@
-version: '2.1'
-
-services:
-  ensemblemethod:
-    image: ensemblemethod
-    build: .
-    ports:
-      - 57772:57772
