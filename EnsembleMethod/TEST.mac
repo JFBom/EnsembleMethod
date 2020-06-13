@@ -1,0 +1,2 @@
+ROUTINE test
+     w ##class(Module.OBJToV3).StringMd5Hash("1122121")
