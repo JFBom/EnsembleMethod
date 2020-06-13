@@ -31,7 +31,7 @@ ClassMethod StringMd5Hash2(Input As %String) As %String
 }
 
 /// third Method
-ClassMethod StringMd5Hash2(Input As %String) As %String
+ClassMethod StringMd5Hash3(Input As %String) As %String
 {
  
   Set InString = $ZCVT(Input,"O","UTF8")
